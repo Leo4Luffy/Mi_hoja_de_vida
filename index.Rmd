@@ -64,7 +64,7 @@ Aside
 
 <i class="fab fa-researchgate"></i> [researchgate](https://www.researchgate.net/profile/Jaime_Lopez_Hoyos)
 
-<i class="fab fa-twitter"></i> [leo4luffy](https://twitter.com/leo4luffy)
+<i class="fab fa-twitter"></i> [twitter.com/leo4luffy](https://twitter.com/leo4luffy)
 
 ### Intereses
 
