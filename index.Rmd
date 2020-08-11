@@ -74,7 +74,7 @@ Aside
 
 **Áreas**: Genética animal, Bioestadística.
   
-**Programación**: R, Python.
+**Programación**: R<!--, Python-->.
 
 **Sistema de control de versiones**: Git, GitHub.
 

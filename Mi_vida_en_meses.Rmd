@@ -1,0 +1,163 @@
+---
+title: "Mi vida en meses"
+author: "Jorge Leonardo López Martínez"
+date: "11/8/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE, fig.showtext = TRUE}
+
+library(dplyr)
+library(lubridate)
+library(forcats)
+library(tidyr)
+library(waffle)
+library(hrbrthemes)
+library(ggplot2)
+library(prismatic)
+library(xkcd)
+library(showtext) # Link donde hay varias fuentes de ejemplo (https://github.com/yixuan/showtext)
+font_add_google('Gochi Hand', 'gochi')
+showtext_auto()
+
+# Preparación de los datos ----
+
+birth_year <- 1989
+birth_month <- 3
+current_year <- year(today())
+current_month <- month(today())
+
+life_data <- expand_grid(
+  month = month.name,
+  year = birth_year:current_year
+) %>%
+  mutate(month = fct_relevel(month, month.name)) %>%
+  arrange(year, month) %>%
+  group_by(year) %>%
+  mutate(month_number = row_number()) %>%
+  ungroup() %>%
+  filter(!(year == birth_year & month_number < birth_month))
+
+eras <- tribble(
+  ~year_month, ~era, ~fill_colour,
+  '1989,11', 'Infancia', 'yellow',
+  '1992,11', 'Preescolar', 'green',
+  '1995,11', 'Primaria', 'red',
+  '2000,12', 'Bachillerato', 'cyan',
+  '2008,4', 'Preuniversitario', 'purple',
+  '2008,7', 'Profesional', 'black',
+  '2015,7', 'Maestria', 'gray54',
+  '2019,6', 'Independiente', 'orange'
+  )
+
+eras[['text_colour']] <- as.character(clr_darken(eras[['fill_colour']], shift = 0.1))
+
+life_data <- life_data %>%
+  rowwise() %>%
+  mutate(year_month = paste0(c(year, month_number), collapse = ',')) %>%
+  ungroup() %>%
+  left_join(eras, by = 'year_month') %>%
+  fill(era, fill_colour, text_colour) %>%
+  mutate(fill_colour = fct_inorder(fill_colour))
+
+life_data_list <- split(life_data, life_data$era)
+
+# Gráfica de waffle ----
+
+background_colour <- 'white'
+
+life_in_months_base <- life_data %>%
+  count(fill_colour) %>%
+  ggplot() +
+  geom_waffle(aes(fill = fill_colour, values = n), n_rows = 12, size = 1, flip = FALSE, alpha = 0.4) +
+  coord_equal() +
+  scale_x_continuous(limits = c(-0.5, 37.5)) +
+  scale_y_continuous(limits = c(-2.5, 14.5)) +
+  scale_fill_identity() +
+  labs(y = NULL, x = NULL) +
+  theme_void() +
+  theme(
+    legend.position = 'none',
+    plot.background = element_rect(fill = background_colour, color = background_colour),
+    axis.text.x = element_blank(),
+    axis.text.y = element_blank()
+  )
+
+# Anotaciones ----
+
+annotation_base_size <- 10
+annotation_lineheight <- 1
+initial_annotations_font_family <- 'gochi'
+
+
+initial_text <- function(x, y, label, size = annotation_base_size, colour = initial_annotations_colour, ...) {
+  annotate('text', x = x, y = y, label = label, size = size, family = 'gochi', ...)
+}
+
+initial_segment <- function(x, xend, y, yend) {
+  geom_segment(aes(x = x, xend = xend, y = y, yend = yend))
+}
+
+datalines <- data.frame(x1 = c(0, 0), y1 = c(1, 8),
+                        xends = c(0, 0), yends=c(5, 12))
+
+datalinesage <- data.frame(x1 = c(2), y1 = c(0),
+                        xends = c(4), yends = c(0))
+
+life_in_months_initial_annotations <- life_in_months_base +
+  initial_text(x = 0, y = 6.5, label = '1 año', size = annotation_base_size * 0.4, angle = 90) +
+  initial_segment(x = -0.25, xend = 0.25, y = .94, yend = .98) +
+  xkcdline(aes(x = x1, y = y1, xend = xends, yend = yends), datalines, xjitteramount = .28) +
+  initial_segment(x = -0.25, xend = 0.25, y = 12, yend = 12) +
+  initial_text(x = 0.5, y = 14.5, label = '1 cuadro', size = annotation_base_size * 0.4, lineheight = annotation_lineheight, hjust = 0.6, angle = 25) +
+  initial_text(x = 0.5, y = 13.9, label = '= 1 mes', size = annotation_base_size * 0.4, lineheight = annotation_lineheight, hjust = 0.6, angle = 25) +
+  geom_segment(aes(x = 0.0, xend = 1, y = 13, yend = 12), arrow = arrow(length = unit(0.0175, 'npc'))) +
+  initial_text(x = -0.5, y = 0, label = 'edad', size = annotation_base_size * 0.4, hjust = 0) +
+  xkcdline(aes(x = x1, y = y1, xend = xends, yend = yends), datalinesage, yjitteramount = 0.13) +
+  geom_segment(aes(x = 3.9, xend = 4, y = 0, yend = 0), arrow = arrow(length = unit(0.0175, 'npc')))
+
+get_png <- function(filename) {
+  grid::rasterGrob(png::readPNG(filename), interpolate = TRUE)
+}
+
+l <- get_png('img/luffy.png')
+t = grid::roundrectGrob()
+
+life_in_months_leopard = life_in_months_initial_annotations +
+  annotation_custom(l,
+                    xmin = 34,
+                    xmax = 40,
+                    ymin = 8,
+                    ymax = 15)
+
+role_annotations_y <- -0.25
+roles_size <- annotation_base_size * 0.8
+
+life_in_months_role_annotations <- life_in_months_leopard +
+  annotate(geom = 'text', x = 7.0, y = -1.4, label = 'Infancia y adolescencia', family = 'gochi', size = roles_size * 0.7, color = 'black') +
+  annotate(geom = 'text', x = 4.7, y = role_annotations_y + 14.55, label = 'La Salle', color = 'green', family = 'gochi', size = roles_size* 0.6) +
+  annotate(geom = 'text', x = 4.7, y = role_annotations_y + 13.55, label = '(Preescolar)', size = roles_size * 0.4, color = 'green', family = 'gochi') +
+  annotate(geom = 'text', x = 8.9, y = role_annotations_y + 14.55, label = 'La Salle', color = 'red', family = 'gochi', size = roles_size* 0.6) +
+  annotate(geom = 'text', x = 8.9, y = role_annotations_y + 13.55, label = '(Primaria)', size = roles_size * 0.4, color = 'red', family = 'gochi') +
+  annotate(geom = 'text', x = 13.2, y = role_annotations_y + 14.55, label = 'La Salle', color = 'cyan', family = 'gochi', size = roles_size* 0.6) +
+  annotate(geom = 'text', x = 13.2, y = role_annotations_y + 13.55, label = '(Bachilleraro)', size = roles_size * 0.4, color = 'cyan', family = 'gochi') +
+  annotate(geom = 'text', x = 21.5, y = 13.8, label = 'Juventud y adultez', family = 'gochi', size = roles_size * 0.7, color = 'black') +
+  annotate(geom = 'text', x = 19, y = role_annotations_y - 1.25, label = 'U. Nacional', color = 'black', family = 'gochi', size = roles_size* 0.6) +
+  annotate(geom = 'text', x = 19, y = role_annotations_y - 2.25, label = '(Zootecnia)', size = roles_size * 0.4, color = 'black', family = 'gochi') +
+  geom_curve(aes(x = 21.5, xend = 22, y = -1, yend = 0.35), curvature = 0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'purple') +
+  annotate(geom = 'text', x = 29.25, y = role_annotations_y - 1.25, label = 'U. Nacional', family = 'gochi', color = 'gray54', size = roles_size* .55) +
+  annotate(geom = 'text', x = 29.25, y = role_annotations_y - 2.25, label = '(M.Sc. Ciencias Agrarias)', size = roles_size * 0.4, color = 'gray54', family = 'gochi') +
+  geom_curve(aes(x = 27.00, xend = 28.25, y = -1, yend = 0.35), curvature = -0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'gray54') +
+  annotate(geom = 'text', x = 30.25, y = role_annotations_y + 14.55, label = 'Estudio', color = 'orange', family = 'gochi', size = roles_size * 0.4) +
+  annotate(geom = 'text', x = 30.25, y = role_annotations_y + 13.55, label = 'independiente', color = 'orange', family = 'gochi', size = roles_size * 0.4) +
+  annotate(geom = 'text', x = 36.00, y = role_annotations_y + 7.55, label = 'Mi vida', color = 'black', family = 'gochi', size = roles_size * 0.8, angle = 25) +
+  annotate(geom = 'text', x = 36.00, y = role_annotations_y + 6.55, label = 'en meses', color = 'black', family = 'gochi', size = roles_size * 0.8, angle = 25)
+life_in_months_role_annotations
+
+ggsave('img/Mi_vida_en_meses.png', plot = life_in_months_role_annotations, device = 'png', type = 'cairo', width = 25, height = 15, dpi = 300)
+```
+
