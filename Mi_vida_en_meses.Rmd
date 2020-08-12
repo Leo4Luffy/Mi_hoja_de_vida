@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+<!-- Este bonito gráfico lo replique de aqui https://github.com/heidiesteiner/mylifeinmonths -->
+
 ```{r, echo = FALSE, eval = TRUE, message = FALSE, warning = FALSE, fig.showtext = TRUE}
 
 library(dplyr)
@@ -148,7 +150,7 @@ life_in_months_role_annotations <- life_in_months_leopard +
   annotate(geom = 'text', x = 21.5, y = 13.8, label = 'Juventud y adultez', family = 'gochi', size = roles_size * 0.7, color = 'black') +
   annotate(geom = 'text', x = 19, y = role_annotations_y - 1.25, label = 'U. Nacional', color = 'black', family = 'gochi', size = roles_size* 0.6) +
   annotate(geom = 'text', x = 19, y = role_annotations_y - 2.25, label = '(Zootecnia)', size = roles_size * 0.4, color = 'black', family = 'gochi') +
-  geom_curve(aes(x = 21.5, xend = 22, y = -1, yend = 0.35), curvature = 0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'purple') +
+  geom_curve(aes(x = 21.5, xend = 22, y = -1, yend = 0.35), curvature = 0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'black') +
   annotate(geom = 'text', x = 29.25, y = role_annotations_y - 1.25, label = 'U. Nacional', family = 'gochi', color = 'gray54', size = roles_size* .55) +
   annotate(geom = 'text', x = 29.25, y = role_annotations_y - 2.25, label = '(M.Sc. Ciencias Agrarias)', size = roles_size * 0.4, color = 'gray54', family = 'gochi') +
   geom_curve(aes(x = 27.00, xend = 28.25, y = -1, yend = 0.35), curvature = -0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'gray54') +
