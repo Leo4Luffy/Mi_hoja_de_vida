@@ -29,7 +29,7 @@ showtext_auto()
 # Preparación de los datos ----
 
 birth_year <- 1989
-birth_month <- 3
+birth_month <- 11
 current_year <- year(today())
 current_month <- month(today())
 
@@ -52,8 +52,9 @@ eras <- tribble(
   '2000,12', 'Bachillerato', 'cyan',
   '2008,4', 'Preuniversitario', 'purple',
   '2008,7', 'Profesional', 'black',
-  '2015,7', 'Maestria', 'gray54',
-  '2019,6', 'Independiente', 'orange'
+  '2015,7', 'Maestria', 'orange',
+  '2019,6', 'Independiente', 'gray54',
+  '2020,10', 'Master', 'yellow1'
   )
 
 eras[['text_colour']] <- as.character(clr_darken(eras[['fill_colour']], shift = 0.1))
@@ -151,12 +152,17 @@ life_in_months_role_annotations <- life_in_months_leopard +
   annotate(geom = 'text', x = 19, y = role_annotations_y - 1.25, label = 'U. Nacional', color = 'black', family = 'gochi', size = roles_size* 0.6) +
   annotate(geom = 'text', x = 19, y = role_annotations_y - 2.25, label = '(Zootecnia)', size = roles_size * 0.4, color = 'black', family = 'gochi') +
   geom_curve(aes(x = 21.5, xend = 22, y = -1, yend = 0.35), curvature = 0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'black') +
-  annotate(geom = 'text', x = 29.25, y = role_annotations_y - 1.25, label = 'U. Nacional', family = 'gochi', color = 'gray54', size = roles_size* .55) +
-  annotate(geom = 'text', x = 29.25, y = role_annotations_y - 2.25, label = '(M.Sc. Ciencias Agrarias)', size = roles_size * 0.4, color = 'gray54', family = 'gochi') +
-  geom_curve(aes(x = 27.00, xend = 28.25, y = -1, yend = 0.35), curvature = -0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'gray54') +
-  annotate(geom = 'text', x = 30.25, y = role_annotations_y + 14.55, label = 'Estudio', color = 'orange', family = 'gochi', size = roles_size * 0.4) +
-  annotate(geom = 'text', x = 30.25, y = role_annotations_y + 13.55, label = 'independiente', color = 'orange', family = 'gochi', size = roles_size * 0.4) +
-  annotate(geom = 'text', x = 36.00, y = role_annotations_y + 7.55, label = 'Mi vida', color = 'black', family = 'gochi', size = roles_size * 0.8, angle = 25) +
+  annotate(geom = 'text', x = 25.50, y = role_annotations_y - 1.25, label = 'U. Nacional', family = 'gochi', color = 'orange', size = roles_size* .55) +
+  annotate(geom = 'text', x = 25.50, y = role_annotations_y - 2.25, label = '(M.Sc. Ciencias Agrarias)', size = roles_size * 0.4, color = 'orange', family = 'gochi') +
+  geom_curve(aes(x = 27.00, xend = 28.25, y = -1, yend = 0.35), curvature = -0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'orange') +
+  annotate(geom = 'text', x = 30.25, y = role_annotations_y + 14.55, label = 'Estudio', color = 'gray54', family = 'gochi', size = roles_size * 0.4) +
+  annotate(geom = 'text', x = 30.25, y = role_annotations_y + 13.55, label = 'independiente', color = 'gray54', family = 'gochi', size = roles_size * 0.4) +
+  annotate(geom = 'text', x = 34.75, y = role_annotations_y - 1.25, label = 'Estudiante UPV', color = 'yellow1', family = 'gochi', size = roles_size * 0.55) +
+  annotate(geom = 'text', x = 34.75, y = role_annotations_y - 2.25, label = '(Máster en mejora genética)', size = roles_size * 0.4, color = 'yellow1', family = 'gochi') +
+  
+  geom_curve(aes(x = 32.50, xend = 32.00, y = -1, yend = 0.35), curvature = -0.4, arrow = arrow(length = unit(0.0175, 'npc')), color = 'yellow') +
+  
+   annotate(geom = 'text', x = 36.00, y = role_annotations_y + 7.55, label = 'Mi vida', color = 'black', family = 'gochi', size = roles_size * 0.8, angle = 25) +
   annotate(geom = 'text', x = 36.00, y = role_annotations_y + 6.55, label = 'en meses', color = 'black', family = 'gochi', size = roles_size * 0.8, angle = 25)
 life_in_months_role_annotations
 
