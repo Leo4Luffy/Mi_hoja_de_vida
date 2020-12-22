@@ -1,4 +1,5 @@
 section,in_resume,title,loc,institution,start,end,description_1,description_2,description_3,description_4
+education,TRUE,Máster en mejora genética animal y biotecnología de la reproducción,"Valencia, España",Universitat Politècnica de València,2020,2022,Tesis:,,,
 education,TRUE,MSc en Ciencias agrarias - Genética animal.,"Medellín, Colombia",Universidad Nacional de Colombia,2015,2018,Tesis: Estimación de parámetros genéticos para la producción de leche en el día de control y a los 305 días de lactancia en primera lactancia de vacas Lucerna.,,,
 education,TRUE,Zootecnia.,"Medellín, Colombia",Universidad Nacional de Colombia,2007,2015,Tesis: Estimación de parámetros genéticos para caracteísticas productivas y reproductivas en bovino criollo colombiano Romosinuano.,,,
 research,TRUE,Participación de proyectos de investigación en en el bovino criollo colombiano Romosinuano.,N/A,N/A,2018,Presente,Edición de los registro productivos y de genealogía.,Análisis descriptivo de registros productivos.,Modelación estadística en registros productivos.,Estimación de parámetros genéticos en registros productivos.

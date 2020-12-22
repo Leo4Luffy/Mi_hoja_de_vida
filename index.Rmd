@@ -8,7 +8,7 @@ output:
     self_contained: true
     css: ["css/resume.css"]
     
-# to render into pdf: pagedown::chrome_print("docs/index.html")
+# to render into pdf: pagedown::chrome_print("index.html")
 # If needed:
 # https://pagedown.rbind.io/
 # https://www.pagedmedia.org/about-paged-media/pagedjs-cheatsheet/
