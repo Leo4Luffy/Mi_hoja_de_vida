@@ -8,7 +8,9 @@ output:
     self_contained: true
     css: ["css/resume.css"]
     
-# to render into pdf: pagedown::chrome_print("index.html")
+# Debo renderizar primero así: rmarkdown::render("index.Rmd") ...
+# ... y luego así: pagedown::chrome_print("index.html").
+#
 # If needed:
 # https://pagedown.rbind.io/
 # https://www.pagedmedia.org/about-paged-media/pagedjs-cheatsheet/
@@ -50,27 +52,17 @@ Aside
 ![](img/yop.jpg){width=80%}
 </p>
 
-<i class="fas fa-download"></i> [Descarga mi cv en PDF](https://github.com/Leo4Luffy/Mi_hoja_de_vida/blob/master/index.pdf)
-
 ## Información
 
-<i class="fa fa-mobile-alt"></i> +57 311 678 5981
+<i class="fa fa-mobile-alt"></i> +34 611 768 163
 
-<i class="fas fa-envelope"></i> jollopezma@unal.edu.co
+<i class="fas fa-envelope"></i> jollopezma@gmail.com
 
 ### Redes sociales
 
 <i class="fa fa-github"></i> [github.com/Leo4Luffy](https://github.com/Leo4Luffy)
 
-<i class="fab fa-researchgate"></i> [researchgate](https://www.researchgate.net/profile/Jaime_Lopez_Hoyos)
-
-<i class="fab fa-twitter"></i> [twitter.com/leo4luffy](https://twitter.com/leo4luffy)
-
 ### Intereses
-
-<p align= "center">
-![](img/núcleo_DNA.gif){width=60%}
-</p>
 
 **Áreas**: Genética animal, Bioestadística.
   
